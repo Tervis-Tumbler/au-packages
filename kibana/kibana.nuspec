@@ -3,7 +3,7 @@
   <metadata>
     <id>kibana</id>
     <title>Kibana</title>
-    <version>5.6.4</version>
+    <version>6.2.4</version>
     <owners>hambone</owners>
     <authors>Elastic</authors>
     <summary>Explore and Visualize Your Data</summary>
