@@ -27,7 +27,7 @@ Current options are:
 * `/64bit` to install Office 365 ProPlus 64-bit, otherwise it will default to 32-bit.
 * `/Shared` to install with Shared Computer Licensing for Remote Desktop Services.
 * `/LogPath:'C:\Path\to\log\'` to specify a log location. Defaults to %PATH% if not defined.
-* `/Language:'en-us'` to set the language. `en-us` is the default setting.
+* `/Lang:'en-us'` to add additional languages. `MatchOS` is the default setting.
 
 **Example 1**
 
@@ -38,7 +38,7 @@ This will install Office365 2016 32-bit for a single user. Logs will be in %PATH
 
 **Example 2**
 
-`choco install office365-2016-deployment-tool -packageParameters "/64bit /Shared /LogPath:'C:\logs\'"`
+`choco install office365-2016-deployment-tool -packageParameters "/64bit /Shared /LogPath:'C:\logs\' /Lang:'de-de fr-fr'"`
 
 This will install Office365 2016 64-bit for a Remote Desktop Server and log the output to C:\logs.
 		</description>

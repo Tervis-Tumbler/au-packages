@@ -17,7 +17,6 @@ $ignoreSetupFile = "setup.exe.ignore"
 $arch = 32
 $sharedMachine = 0
 $logPath = "%TEMP%"
-$lang = "en-us"
 
 $arguments = @{}
 
@@ -52,21 +51,21 @@ if ($packageParameters) {
         Write-Host "Installing with Shared Computer Licensing for Remote Desktop Services."
         $sharedMachine = 1
     }
-    
-    if ($arguments.ContainsKey("Language")) {
-        Write-Host "Installing language variant $($arguments['Language'])."
-        $lang = $arguments["Language"]
-    }
 
     if ($arguments.ContainsKey("LogPath")) {
         Write-Host "Installation log in directory $($arguments['LogPath'])"
         $logPath = $arguments["LogPath"]
     }
 
+    if ($arguments.ContainsKey("Lang")) {
+        Write-Host "Installing additional Languages $($arguments['Lang'])"
+        $lang = $arguments["Lang"]
+    }
+
 } else {
     Write-Debug "No Package Parameters Passed in"
     Write-Host "Installing 32-bit version."
-    Write-Host "Installing language variant en-us."
+    Write-Host "Installing language variant MatchOS."
     Write-Host "Installation log in directory %TEMP%"
 }
 
@@ -107,11 +106,11 @@ if ($PreinstalledOfficeVersionArch.Version -ne $null) {
     }
 }
 
-$installConfigData = @"
+[xml]$installConfigData = @"
 <Configuration>
   <Add OfficeClientEdition="$arch">
     <Product ID="O365ProPlusRetail">
-      <Language ID="$lang" />
+      <Language ID="MatchOS" />
     </Product>
   </Add>  
   <Display Level="None" AcceptEULA="TRUE" />  
@@ -120,11 +119,11 @@ $installConfigData = @"
 </Configuration>
 "@
 
-$uninstallConfigData = @"
+[xml]$uninstallConfigData = @"
 <Configuration>
   <Remove>
     <Product ID="O365ProPlusRetail">
-      <Language ID="$lang" />
+      <Language ID="MatchOS" />
     </Product>
   </Remove>
   <Display Level="None" AcceptEULA="TRUE" />  
@@ -133,8 +132,18 @@ $uninstallConfigData = @"
 </Configuration>
 "@
 
-$installConfigData | Out-File $installConfigFileLocation
-$uninstallConfigData | Out-File $uninstallConfigFileLocation
+If($lang){
+    $lang = $lang.Replace("'","").Split()
+    foreach($la in $lang){
+    $language = $installConfigData.CreateElement('Language')
+    $language.SetAttribute("ID",$la)
+    $installConfigData.Configuration.Add.Product.AppendChild($language)
+    $unnstallConfigData.Configuration.Add.Product.AppendChild($language)
+    }   
+}
+
+$installConfigData.Save($installConfigFileLocation)
+$uninstallConfigData.Save($uninstallConfigFileLocation)
 
 New-Item -Path $toolsDir -Name $ignoreSetupFile -ItemType File
 New-Item -Path $toolsDir -Name $ignoreExtractFile -ItemType File
