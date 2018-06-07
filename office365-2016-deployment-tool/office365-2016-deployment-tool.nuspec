@@ -1,8 +1,8 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
 	<metadata>
 		<id>office365-2016-deployment-tool</id>
-		<version>16.0.7614.3602</version>
+		<version>16.0.9326.3600</version>
 		<packageSourceUrl>https://github.com/Tervis-Tumbler/au-packages/tree/master/office365-2016-deployment-tool</packageSourceUrl>
 		<owners>hambone</owners>
 		<title>Office365 2016 Deployment Tool</title>
@@ -27,7 +27,7 @@ Current options are:
 * `/64bit` to install Office 365 ProPlus 64-bit, otherwise it will default to 32-bit.
 * `/Shared` to install with Shared Computer Licensing for Remote Desktop Services.
 * `/LogPath:'C:\Path\to\log\'` to specify a log location. Defaults to %PATH% if not defined.
-* `/Language:'en-us'` to set the language. `en-us` is the default setting.
+* `/Lang:'de-de'` to add different languages. `en-us` is the default setting.
 
 **Example 1**
 
@@ -38,7 +38,7 @@ This will install Office365 2016 32-bit for a single user. Logs will be in %PATH
 
 **Example 2**
 
-`choco install office365-2016-deployment-tool -packageParameters "/64bit /Shared /LogPath:'C:\logs\'"`
+`choco install office365-2016-deployment-tool -packageParameters "/64bit /Shared /LogPath:'C:\logs\' /Lang:'de-de en-us'"`
 
 This will install Office365 2016 64-bit for a Remote Desktop Server and log the output to C:\logs.
 		</description>
